@@ -15,15 +15,27 @@ class Student:
         else:
             print('看喜洋洋')
 
+class Test:
+    def __init__(self, foo):
+        self.__foo = foo
+
+    def __bar(self):
+        print(self.__foo)
+        print('__bar')
+
+
 def main():
-    stu1 = Student('zhangsan', 18)
-    stu2 = Student('lisi', 6)
+    # stu1 = Student('zhangsan', 18)
+    # stu2 = Student('lisi', 6)
 
-    stu1.watch_tv()
-    stu2.watch_tv()
+    # stu1.watch_tv()
+    # stu2.watch_tv()
 
-    stu1.study('python编程')
-    stu2.study('数学')
+    # stu1.study('python编程')
+    # stu2.study('数学')
+    test = Test('hello')
+    # test.__bar()
+    print(test)
 
 if __name__ == '__main__':
     main()
