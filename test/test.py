@@ -21,7 +21,10 @@
 # print(c)
 # 2:56
 
+# print(True > 0)
+from random import randrange, randint
 
+print(randrange(4))
 
 
 """
@@ -78,7 +81,7 @@
 #     print()
 
 
-print(100*4*12)
+# print(100*4*12)
 
 
 # samsung SM-G9650|7|12|2|7|522|1|77|1|1|1|1105
