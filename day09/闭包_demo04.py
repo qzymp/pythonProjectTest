@@ -31,3 +31,15 @@ print(outer(2)())
 print(outer(5)())
 
 
+print('--------------------------')
+
+
+def func(*args):
+    # print(**kwargs)
+    print(*args)
+
+# arg_dict = {'args_1':'a', 'arg_2':'b'}
+func(*[1,2])
+
+
+
