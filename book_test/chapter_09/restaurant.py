@@ -19,4 +19,4 @@ your_restaurant.describe_restaurant()
 h = Restaurant('c', 'd')
 h.describe_restaurant()
 
-
+number_served = 0
