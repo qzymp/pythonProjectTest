@@ -7,7 +7,7 @@ from random import randrange, randint
 
 
 # items1 = list(map(lambda x: x ** 2, filter(lambda x: x % 2, range(1, 10))))
-# print(items1)
+# print(items1)sada
 
 
 # LOGID_BATTLE_CHAT_FLOW|1.1.14.1|2022-10-19 19:45:58|GU_1131|1|1001|67601510198587|0|30|eb3b351dbd238bd2e939cddd672e6bf3|3146137716661796911|25|\
