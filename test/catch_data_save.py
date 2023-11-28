@@ -4,7 +4,7 @@ from time import sleep
 import logging
 import os
 '''
-使用说明
+使用说明    
 1.将perfdog excel数据以 xxx_perfdog网址编号  的格式命名
 2.将存放perfdog excel数据的路径放置 main中直接运行即可
 ps:数据获取时切记不要打开对应的perfdog excel数据，否则会报错，
@@ -16,13 +16,55 @@ perfdogfield_alllist = ["Avg(Memory)[MB]","Avg(Memory+Swap)[MB]","Peak(Memory)[M
 perfdogfield_allendlist = ["VirtualMemory[MB]"]
 
 # 常规数据--游戏中--标签下需要遍历的字段
-perfdogfield_gamelist = ["Avg(FPS)","FPS>=18[%]","Var(FPS)","Jank(/10min)","BigJank(/10min)",
+perfdogfield_gamelist = ["Avg(FPS)","FPS>=18[%]","Var(FPS)","Min(FPS)","Jank(/10min)","BigJank(/10min)",
                         "Avg(Memory)[MB]","Avg(Memory+Swap)[MB]","Peak(Memory)[MB]","Peak(Memory+Swap)[MB]",
                          "Avg(AppCPU)[%]","(Recv+Send)[KB/10min]","Avg(Power)[mW]","FPower[mW]","Sum(Battery)[mWh]"]
 perfdogfield_gameendlist = ["TotalCPU[%]","GUsage[%]","Voltage[mV]","Current[mA]","Recv[KB/s]","Send[KB/s]"]
 
+# 机型列表
+phone_list = ['OPPO A33', 'OPPO A59s', 'vivo X9i', 'OPPO R11t', 'MI 8', 'iPhone 6', 'iPhone 6S', 'iPhone 8 Plus', 'iPhone11']
+# 机型标准  FPS均值、FPS方差、PSS峰值、CPU均值
+a33_standard = [25, 50, 0.55, 1500]
+a59s_standard = [25, 40, 0.4, 1500]
+vivox9_30fps_standard = [27, 50, 0.4, 1500]
+vivox9_60fps_standard = [53, 25, 0.4, 1500]
+oppor11_30fps_standard = [28, 40, 0.32, 2000]
+oppor11_60fps_standard = [55, 25, 0.32, 2000]
+mi8_standard = [56, 20, 0.25, 2000]
+iphone6_standard = [27, 25, 0.55, 580]
+iphone6s_30fps_standard = [28, 25, 0.45, 900]
+iphone6s_60fps_standard = [57, 10, 0.45, 900]
+iphone7_30fps_standard = [28, 25, 0.45, 1200]
+iphone7_60fps_standard = [58, 10, 0.45, 1200]
+iphone11_standard = [58, 1, 0.2, 1800]
+
+# 60帧机型标准
+phone_60fps_standard_list = [a33_standard, a59s_standard, vivox9_60fps_standard, oppor11_60fps_standard, mi8_standard,
+                             iphone6_standard, iphone6s_60fps_standard, iphone7_60fps_standard, iphone11_standard]
+# 30帧机型标准（x9、r11、6s、iPhone7为30帧）
+phone_30fps_standard_list = [a33_standard, a59s_standard, vivox9_30fps_standard, oppor11_30fps_standard, mi8_standard,
+                             iphone6_standard, iphone6s_30fps_standard, iphone7_30fps_standard, iphone11_standard]
+
+# 机型：机型标准
+phone_standard = {}
+# 获取机型及对应标准
+for i in range(0, 9):
+    phone_standard[phone_list[i]] = phone_30fps_standard_list[i]
+    # phone_standard[phone_list[i]] = phone_60fps_standard_list[i]
+
 # 常规数据除了--all--标签外，需要遍历的标签
-gamelabel_list = ["all",'游戏启动到进入房间','对局loading','游戏内从英雄出生到基地爆炸','基地爆炸到返回到大厅']
+# gamelabel_list = ['首次进排行榜拍脸','设置说明窗口','打开排行榜首页','巅峰榜战区','巅峰榜全国','巅峰榜右上角说明','巅峰榜右下角说明','切换榜单','天梯榜-全国','皮肤榜-全国','贵族积分榜-全国','战令榜-全国','成就榜-全国','胜场榜-全国','连续胜场榜-全国','人气榜-全国','名师榜-全国']
+# gamelabel_list = ['大厅','大厅邀请','房间','房间小浮窗','房间邀请','结算','结算小浮窗','结算邀请','结算邀请按钮']
+# gamelabel_list = ['英雄榜','分路榜','亲密关系榜']
+# gamelabel_list = ['皮肤展示','all']
+# gamelabel_list = ['领取体力','all']
+# gamelabel_list = ['第一关','第二关','第三关','第四关','第五关']
+# gamelabel_list = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16',]
+# gamelabel_list = ['第1波','第2波','第3波','第4波','第5波','第6波','第7波','第8波','第9波','第10波','第11波','第12波','第13波','第14波','第15波','第16波']
+
+# gamelabel_list = ['视频']
+# gamelabel_list = ['全民电竞','全国大赛邀请','电竞商店','电竞福利','我的生涯','排行榜','赛事选择','主题赛','电竞徽章','近期赛事']
+
 
 # ui标签
 perfdoguilabel_list = ["个人资料1","个人资料2","战令1","战令2","聊天1","聊天2","测试测试测试",
@@ -53,10 +95,15 @@ def catch_routineperfdog_data(path):
 
             # 获取 all 标签的数据   all 标签下的数据对比于其它的标签的取法有不同之处，因此逻辑单独处理
             perfdog_data_all = perfdog_datas['all']
+            logging.info("----------------------------------------------------------")
             perfdog_data_all_maxrow = perfdog_data_all.max_row
 
             # 获取 all 标签里对应数据的下标
             all_row_range = perfdog_data_all[8:9]
+            # 获取机型
+            phone_name = perfdog_data_all.cell(5,2).value
+            print(phone_name)
+
             perfdog_all_data_list = []
             perfdog_all_updata = {}
             for all_row in all_row_range:
@@ -152,6 +199,7 @@ def catch_routineperfdog_data(path):
                     game1_avg_fps = perfdog_game_updata["Avg(FPS)"]
                     game1_avg_f18 = perfdog_game_updata["FPS>=18[%]"]
                     game1_varfos = perfdog_game_updata["Var(FPS)"]
+                    game1_minfps = perfdog_game_updata["Min(FPS)"]
                     game1_jank = perfdog_game_updata["Jank(/10min)"]
                     game1_bigjank = perfdog_game_updata["BigJank(/10min)"]
                     game1_avg_memory = perfdog_game_updata["Avg(Memory)[MB]"]
@@ -205,7 +253,7 @@ def catch_routineperfdog_data(path):
                             game1_avg_total_cpu_data_save = "/"
 
                     # 将抓取的数据传入list
-                    perfdog_list.append([perfdogfile_id[0],perfdoggamelabel,game1_avg_fps,game1_avg_f18_data_save,game1_varfos,game1_jank,game1_bigjank,all_avg_memory,
+                    perfdog_list.append([perfdogfile_id[0],perfdoggamelabel,game1_avg_fps,game1_avg_f18_data_save,game1_varfos,game1_minfps,game1_jank,game1_bigjank,all_avg_memory,
                                  all_avg_memory_swap,all_peak_memory,all_peak_memory_swap,all_peak_virtual_memory,
                                  game1_avg_memory,game1_avg_memory_swap,game1_peak_memory,game1_peak_memory_swap,
                                  game1_avg_cpu_data_save,game1_avg_total_cpu_data_save,game1_gpu_data,game1_recvkbm,game1_sendkbm,
@@ -224,7 +272,7 @@ def catch_routineperfdog_data(path):
     # 在excel表格类型文件中建立一张sheet表单
     sheet = workbook.add_sheet('test', cell_overwrite_ok=True)
     # 自定义列名
-    col = ('获取文件','文件标签','avgFPS', '>18帧占比','Var(FPS)', 'Jank', 'BigJank', '整局PSS均值', '整局Avg(PSS+Swap)', '整局MaxPSS', '整局Max(PSS+Swap)',
+    col = ('获取文件','文件标签','avgFPS', '>18帧占比','Var(FPS)', 'Min(FPS)', 'Jank', 'BigJank', '整局PSS均值', '整局Avg(PSS+Swap)', '整局MaxPSS', '整局Max(PSS+Swap)',
             '整局虚拟内存峰值', 'PSS均值', 'Avg(PSS+Swap)', 'MaxPSS', 'Max(PSS+Swap)', 'AvgCPU', 'AvgToTalCPU','GPU',
            'recv/10min','send/10min','Avg(Power)','F(Power)','Sum(Battery)','Voltage','Current','perfdog链接')
 
@@ -374,6 +422,6 @@ def catch_uiperfdog_data(path):
 
 if __name__ == '__main__':
     # 常规数据 + 功耗数据 获取
-    catch_routineperfdog_data("D:\\aov_perfdog_data\\第一局")
+    catch_routineperfdog_data("D:\\perfdog_data")
     # ui数据获取
     # catch_uiperfdog_data("D:\\海外性能测试\\uitest")
