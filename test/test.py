@@ -20,12 +20,8 @@ from random import randrange, randint
 
 
 
-list = ['a', 'b', 'c']
-s = list.index('a')
-print(s)
 
-
-
-
-
-
+def foo(*args, **kwargs):
+    print(args)
+    print(kwargs)
+foo(3, 2.1, True, name='骆昊', age=43, gpa=4.95)

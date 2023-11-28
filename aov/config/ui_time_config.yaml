@@ -1,0 +1,81 @@
+﻿# UI耗时基准
+V84_sumavgtime:
+  oppo A33: 1.85
+  oppo A59: 1.49
+  vivo X9: 1.32
+  oppo r11: 1.1
+  xiaomi 8: 0.85
+  iphone6: 2.29
+  iphone 6s: 1.1
+  iphone 7: 1.29
+  iphone 11 promax: 0.94
+V91_sumavgtime:
+  oppo A33: 2.26
+  oppo A59: 1.53
+  vivo X9: 1.47
+  oppo r11: 1.15
+  xiaomi 8: 0.75
+  iphone6: 1.55
+  iphone 6s: 0.86
+  iphone 7: 0.79
+  iphone 11 promax: 0.96
+V84_lowavgtime:
+  oppo A33: 1.48
+  oppo A59: 1.23
+  vivo X9: 0.99
+  oppo r11: 0.89
+  xiaomi 8: 0.78
+  iphone6: 1.55
+  iphone 6s: 0.97
+  iphone 7: 1.4
+  iphone 11 promax: 1.04
+V91_lowavgtime:
+  oppo A33: 1.53
+  oppo A59: 1.12
+  vivo X9: 1.1
+  oppo r11: 0.95
+  xiaomi 8: 0.66
+  iphone6: 1.29
+  iphone 6s: 0.79
+  iphone 7: 0.64
+  iphone 11 promax: 0.99
+V84_highavgtime:
+  oppo A33: 3.55
+  oppo A59: 2.92
+  vivo X9: 2.37
+  oppo r11: 1.91
+  xiaomi 8: 1.51
+  iphone6: 4.98
+  iphone 6s: 1.51
+  iphone 7: 2.37
+  iphone 11 promax: 1.36
+V91_highavgtime:
+  oppo A33: 4.45
+  oppo A59: 3.17
+  vivo X9: 2.95
+  oppo r11: 2.32
+  xiaomi 8: 1.39
+  iphone6: 2.35
+  iphone 6s: 1.5
+  iphone 7: 1.33
+  iphone 11 promax: 1.6
+V84_towavgtime:
+  oppo A33: 1.54
+  oppo A59: 0.76
+  vivo X9: 0.89
+  oppo r11: 0.74
+  xiaomi 8: 0.51
+  iphone6: 0.88
+  iphone 6s: 0.81
+  iphone 7: 0.77
+  iphone 11 promax: 0.56
+V91_towavgtime:
+  oppo A33: 0.82
+  oppo A59: 0.64
+  vivo X9: 0.84
+  oppo r11: 0.65
+  xiaomi 8: 0.48
+  iphone6: 0.81
+  iphone 6s: 0.53
+  iphone 7: 0.48
+  iphone 11 promax: 0.64
