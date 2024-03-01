@@ -62,6 +62,10 @@ def select_sort(items):
     print(items)
 
 
+def bubble_sort(items, comp=lambda x,y: x > y):
+    """冒泡排序"""
+
+
 
 
 if __name__ == '__main__':
